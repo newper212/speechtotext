@@ -69,4 +69,4 @@ app.post('/uploadfile', upload.single('filePhoto'), (req, res, next) => {
       
     })
 
-app.listen(process.env.port || 8081, () => console.log('Server started on port 3000'));
+app.listen(process.env.port || 1337, () => console.log('Server started on port 3000'));
