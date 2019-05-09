@@ -1,0 +1,245 @@
+
+<head>
+    
+    <link rel="stylesheet"  type="text/css" href="main.css">
+ 
+
+  
+ <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    
+<script>
+
+$(document).ready(function() {
+  $('.loading').hide();
+});
+
+function addSpinner(el, static_pos)
+{
+  var spinner = el.children('.spinner');
+  if (spinner.length && !spinner.hasClass('spinner-remove')) return null;
+  !spinner.length && (spinner = $('<div class="spinner' + (static_pos ? '' : ' spinner-absolute') + '"/>').appendTo(el));
+  animateSpinner(spinner, 'add');
+}
+
+function removeSpinner(el, complete)
+{
+  var spinner = el.children('.spinner');
+  spinner.length && animateSpinner(spinner, 'remove', complete);
+}
+
+function animateSpinner(el, animation, complete)
+{
+  if (el.data('animating')) {
+    el.removeClass(el.data('animating')).data('animating', null);
+    el.data('animationTimeout') && clearTimeout(el.data('animationTimeout'));
+  }
+  el.addClass('spinner-' + animation).data('animating', 'spinner-' + animation);
+  el.data('animationTimeout', setTimeout(function() { animation == 'remove' && el.remove(); complete && complete(); }, parseFloat(el.css('animation-duration')) * 1000));
+}
+
+
+function uploadData(formdata){
+  console.log('900');
+$.ajax({
+    url: 'uploadfile',
+    type: 'post',
+    data: formdata,
+    contentType: false,
+    processData: false,
+    dataType: 'json',
+    beforeSend: function () {
+      $('.loading').show();
+    },
+    success: function(response){
+      console.log('regreso a la web');
+      $('.loading').hide();
+       console.log(response);
+       console.log(response.success);
+     //  $('#valor').val('11111111');
+       $("textarea[name='mensajeEjemplo']").val(response.success)
+    }
+});
+
+}
+
+   function readURL(input) {
+    console.log('entro al evento');
+  if (input.files && input.files[0]) {
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('.image-upload-wrap').hide();
+     
+     var files = input.files;
+	$("#audio").attr("src", URL.createObjectURL(files[0]));
+	document.getElementById("player").load();
+    //document.getElementById("player").play();
+
+      $('.file-upload-content').show();
+
+      $('.image-title').html(input.files[0].name);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+
+  var fd = new FormData();
+  console.log('8888');
+  var files = input.files[0];
+  var valorApi=$('.select-css').find(":selected").text();
+  console.log('9999');
+  console.log(files);
+  fd.append('filePhoto',files);
+  fd.append('valorApi',valorApi);
+  console.log('9954333');
+  console.log(fd);
+  $('.select-css').prop('disabled', 'disabled');
+  $('.file-upload-btn').prop('disabled', 'disabled');
+  uploadData(fd);
+
+
+
+  } else {
+    removeUpload();
+  }
+}
+
+function removeUpload() {
+  $('.select-css').prop('disabled', false);
+  $('.file-upload-btn').prop('disabled', false);
+//  $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+
+  $('.file-upload-input').replaceWith($('.file-upload-input').val('').clone(true));
+
+  $('.file-upload-content').hide();
+  $('.image-upload-wrap').show();
+  $("textarea[name='mensajeEjemplo']").val('')
+}
+$('.image-upload-wrap').bind('dragover', function () {
+		$('.image-upload-wrap').addClass('image-dropping');
+	});
+	$('.image-upload-wrap').bind('dragleave', function () {
+		$('.image-upload-wrap').removeClass('image-dropping');
+});
+
+</script>
+
+  </head>
+  
+<!--   <div class="uploader">
+    click here or drag here your images for preview and set userprofile_picture data
+    <input class="teste" type="file" size="32" name="filePhoto" id="filePhoto" />
+    <div class="preview">
+      <img id="blah" src="" alt="your image"  style="height: 75%;width:50%;z-index: -2;"/>
+    </div>
+  </div>
+  <input type="text" id="valor" name="valor" /> -->
+
+  <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  
+  <div class="file-upload">
+      <div>
+
+          <select class="select-css" >
+            <option>GOOGLE API</option>
+            <option>IBM WATSON</option>
+          </select>
+          
+        </div>
+      <br/>
+    <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )" id="ajax-button">Agregue un Audio</button>
+  
+    <div class="image-upload-wrap">
+      <input class="file-upload-input" type='file' onchange="readURL(this);" accept="audio/*" />
+      <div class="drag-text">
+        <h3>Arrastre y suelte un audio</h3>
+      </div>
+    </div>
+    <div class="file-upload-content">
+<!--       <img class="file-upload-image" src="#" alt="your image" />
+ -->     
+      <audio id="player" class="fileaudio" style="width: 100%" controls>
+        <source src="" id="audio" />
+      </audio>
+
+      <div class="image-title-wrap">
+        <button type="button" onclick="removeUpload()" class="remove-image">Remover <span class="image-title">Uploaded Image</span></button>
+      </div>
+      <textarea  id="mensajeEjemplo" rows="4" cols="50" name="mensajeEjemplo" style="width: 90%;height: 25%;"></textarea>
+    </div>
+  </div>
+  <div class="loading">
+</div>
+
+<!-- 
+  <script>
+  
+  $(document).ready(function () {
+  
+  $('#valor').val('valor por defecto');
+  
+ 
+    var imageLoader = $('.teste');
+  //imageLoader.addEventListener('change', handleImage, false);
+    
+function handleImage(e) {
+
+  console.log('11');
+
+  var reader = new FileReader();
+  reader.onload = function(event) {
+
+  }
+  console.log('112222');
+  reader.readAsDataURL(e.target.files[0]);
+  console.log('6655');
+  var fd = new FormData();
+  console.log('8888');
+  var files = $('#filePhoto')[0].files[0];
+  console.log('9999');
+  fd.append('filePhoto',files);
+  console.log('9954333');
+  uploadData(fd);
+}
+
+function uploadData(formdata){
+  console.log('900');
+$.ajax({
+    url: 'uploadfile',
+    type: 'post',
+    data: formdata,
+    contentType: false,
+    processData: false,
+    dataType: 'json',
+    success: function(response){
+      console.log('valores resp');
+      // console.log(response);
+       console.log('valores sucess');
+      //console.log(response.success);
+      console.log('fin resp');
+      $('textarea').val('nnnnnnn')
+      $("#mensajeEjemplo").val('saa');
+      $("textarea[name='mensajeEjemplo']").val('dummyNote')
+       $('#valor').val('1111111');
+      // $('#textarea').val('sadsadasda');
+       //$('textarea').val('vvvvv');
+       
+    },
+    error:function(error){
+      console.log(error);
+    }
+});
+
+}
+  
+  
+  imageLoader
+      .on('change', function (e) {
+        handleImage(e);
+      });
+  
+  
+  });
+  </script>
+
+ -->
