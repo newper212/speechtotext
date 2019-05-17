@@ -60,12 +60,19 @@ const gcs = new Storage({
    const [response] = await operation.promise();
    const transcription = response.results
      .map(result => result.alternatives[0].transcript)
-     
-   var json = JSON.stringify({ 
+    
+     var textoConcatenado='';
+     transcription.forEach(function(value){
+       textoConcatenado=textoConcatenado+value +' '
+     });
+  
+  /* var json = JSON.stringify({ 
      success: transcription, 
      status: 200
    });
-   console.log('valor json: '+json);
+*/
+var json=textoConcatenado;
+   //console.log('valor json: '+json);
    // return json;
    return resolve(json)
           })()

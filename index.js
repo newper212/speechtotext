@@ -6,6 +6,7 @@ const upload = multer({ storage : storage })
 const app = express()
 const googleSpeech=require('./apiGoogle');
 const ibmSpeech=require('./apiBluemix');
+const azureSpeech=require('./apiAzure');
 
 var stream = require('stream');
 var bufferStream = new stream.PassThrough();
@@ -44,20 +45,44 @@ app.post('/uploadfile', upload.single('filePhoto'), (req, res, next) => {
     var valorApi=req.body.valorApi;
     const file = req.file
     var json;
+    var arr = {
+      success: [],
+      status:200
+    };
+  
     (async () => {
     
-    if(valorApi=='GOOGLE API')  
+   /* if(valorApi=='GOOGLE API')  
     json= await googleSpeech.transcribirGoogle(req);
     else
     json= await ibmSpeech.transcribirBluemix(req);
-      
+*/
+//console.log('entro');
+    Promise.all([googleSpeech.transcribirGoogle(req), ibmSpeech.transcribirBluemix(req),azureSpeech.transcribirAzure(req)]).then(function(values) {
+      //Promise.all([azureSpeech.transcribirAzure(req)]).then(function(values) {
+
+      console.log('resultado');
+      //console.log(values);
+      //arr.success.push(values);
+     // arr.push(JSON.parse(values));
+     var resultadofinal = JSON.stringify({ 
+      success: values, 
+      status: 200
+    });
+      console.log('---resltado final del index---');
+      console.log(resultadofinal);
+      console.log('------fin rsultado final index-----');
+      res.end(resultadofinal);
+    }).catch(function(value){console.log('error en la llamada');});
+   
+    //console.log('paso');
     if (!file) {
        const error = new Error('Please upload a file')
        error.httpStatusCode = 400
        return next(error)
      }
-
-     res.end(json);
+     console.log('devolverv valor');
+     
      
     })()
     

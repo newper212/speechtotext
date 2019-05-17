@@ -9,14 +9,16 @@ function transcribirBluemix(req)
     var bufferStream = new stream.PassThrough();
     const file = req.file
     const encoded =  req.file.buffer.toString('base64')
-    
+    console.log('archivo bluemix');
+   // console.log(file);
+    console.log('---fin archivo bluemix----');
     bufferStream.end(Buffer.from(encoded, 'base64'));
 
     const speechToText = new SpeechToTextV1({
-        iam_apikey: 'Pnv6lyVgmrRzEA4KS8-zEo_EqnEljDrJ8RmVKkblHywt',
+        iam_apikey: 'OFBjz4WJaiRLLRJ4vA8QH4Ea_dO6IZuizH3MTLmHjKPL',
         url: 'https://stream.watsonplatform.net/speech-to-text/api'
       });
-
+    var json;
     var params = {
         continuous: true,
         timestamps: true,
@@ -49,17 +51,22 @@ function transcribirBluemix(req)
         });
         console.log('valor 3');
        // console.log(textoConcatenado);
-       var json = JSON.stringify({ 
+       /*var json = JSON.stringify({ 
         success: textoConcatenado, 
         status: 200
-      });
-      console.log('valor 4');
-      return resolve(json)
+      });*/
+       json=textoConcatenado;
+       return resolve(json)
     
       })
       .catch(err => {
-        console.log('error:', err);
+        console.log('error en bluemix:', err);
+        json='error en bluemix';
+        return resolve(json)
       });
+
+      console.log('retorno valor de bluemix');
+      
 
     })
 }

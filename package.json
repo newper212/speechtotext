@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "npm rebuild grpc --target_arch=x64 --target_platform=windows --target_libc=glibc --update-binary"
-    },
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -13,7 +13,9 @@
     "@google-cloud/storage": "^2.5.0",
     "body-parser": "^1.19.0",
     "express": "^4.16.4",
+    "microsoft-cognitiveservices-speech-sdk": "^1.5.0",
     "multer": "^1.4.1",
+    "request": "^2.88.0",
     "watson-developer-cloud": "^4.0.1"
   }
 }

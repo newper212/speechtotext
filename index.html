@@ -1,4 +1,4 @@
-
+<html>
 <head>
     
     <link rel="stylesheet"  type="text/css" href="main.css">
@@ -53,10 +53,70 @@ $.ajax({
     success: function(response){
       console.log('regreso a la web');
       $('.loading').hide();
-       console.log(response);
-       console.log(response.success);
+      console.log(response);
+       //console.log(response.success);
      //  $('#valor').val('11111111');
-       $("textarea[name='mensajeEjemplo']").val(response.success)
+       $("textarea[name='mensajeEjemplo1']").text('Google: '+response.success[0])
+       $("textarea[name='mensajeEjemplo2']").text('IBM: '+response.success[1])
+       $("textarea[name='mensajeEjemplo3']").text('Azure: '+response.success[2])
+
+      //test
+      function findWords(selector) {
+        var words = $('#groserias').val().trim().replace(' ', '').split(',');
+        
+        var $out = $('<div></div>');
+        var text = $(selector).val();
+        //console.log('cantdad palabras');
+        //console.log(words.length);
+        for (var i = 0; i < words.length; i++) {
+         // console.log('entro');
+          var word = words[i];
+          //console.log(word);
+          var from = text.indexOf(word);
+          
+          if (from > 0)
+          {
+          // return;
+          
+          var to = word.length;
+         
+          $out.append($('<div>' + text.slice(from, from + to) + ' ' + '</div>'));
+          //console.log($out);
+          //console.log('termino');
+          }
+        }
+        //console.log('resultado final');
+        //console.log($out);
+        return $out;
+      }
+
+     
+     // var inputs = [ '#mensajeEjemplo2','#mensajeEjemplo1','#mensajeEjemplo3'];
+      var inputs = [ '1','2','3'];
+      for (var i = 0; i < inputs.length; i++) {
+        var $final = $('<div></div>');
+        var selector = '#mensajeEjemplo'+inputs[i];
+        console.log('consulta: '+selector);
+        $final.append(findWords(selector));
+        //console.log($final);
+        //$(selector).after($final);
+       $(('#resultado'+inputs[i])).append($final.html());
+      // $(('#resultado'+inputs[i])).append('<div><div>hola</div><div>persona</div></div>');
+        console.log('inserta : '+('#resultado'+inputs[i]));
+        console.log($final);
+      };
+
+      
+     // $('#mensajeEjemplo').after('<div>valor1</div>');
+     // $('#mensajeEjemplo2').after('<div>valor2</div>');
+     // $('#mensajeEjemplo3').after('<div>valor3</div>');
+      //endtest
+
+
+
+
+
+
     }
 });
 
@@ -113,7 +173,13 @@ function removeUpload() {
 
   $('.file-upload-content').hide();
   $('.image-upload-wrap').show();
-  $("textarea[name='mensajeEjemplo']").val('')
+  $("textarea[name='mensajeEjemplo1']").text('')
+  $("textarea[name='mensajeEjemplo2']").text('')
+  $("textarea[name='mensajeEjemplo3']").text('')
+  $('#resultado1').text('');
+  $('#resultado2').text('');
+  $('#resultado3').text('');
+
 }
 $('.image-upload-wrap').bind('dragover', function () {
 		$('.image-upload-wrap').addClass('image-dropping');
@@ -137,17 +203,23 @@ $('.image-upload-wrap').bind('dragover', function () {
 
   <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   
-  <div class="file-upload">
-      <div>
+  <div class="file-upload" >
+      <!-- <div >
 
-          <select class="select-css" >
+          <select class="select-css" style="text-align: center;margin: auto">
             <option>GOOGLE API</option>
             <option>IBM WATSON</option>
           </select>
           
         </div>
-      <br/>
-    <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )" id="ajax-button">Agregue un Audio</button>
+      <br/> -->
+
+
+      
+
+    <textarea name="" id="groserias" cols="30" rows="5" style="width: 560px;height:60px">yantar, facilidad, pardo, burro, mierda,conectado</textarea>
+    <br/>
+    <button class="file-upload-btn"  type="button" onclick="$('.file-upload-input').trigger( 'click' )" id="ajax-button">Agregue un Audio</button>
   
     <div class="image-upload-wrap">
       <input class="file-upload-input" type='file' onchange="readURL(this);" accept="audio/*" />
@@ -158,14 +230,33 @@ $('.image-upload-wrap').bind('dragover', function () {
     <div class="file-upload-content">
 <!--       <img class="file-upload-image" src="#" alt="your image" />
  -->     
-      <audio id="player" class="fileaudio" style="width: 100%" controls>
+      <audio id="player" class="fileaudio" style="width: 90%" controls>
         <source src="" id="audio" />
       </audio>
 
       <div class="image-title-wrap">
         <button type="button" onclick="removeUpload()" class="remove-image">Remover <span class="image-title">Uploaded Image</span></button>
       </div>
-      <textarea  id="mensajeEjemplo" rows="4" cols="50" name="mensajeEjemplo" style="width: 90%;height: 25%;"></textarea>
+
+      <textarea title="google"  id="mensajeEjemplo1" rows="10" cols="30" name="mensajeEjemplo1" style="width: 30%;height: 25%;"></textarea>
+      <textarea  id="mensajeEjemplo2" rows="10" cols="30" name="mensajeEjemplo2" style="width: 30%;height: 25%;"></textarea>
+      <textarea  id="mensajeEjemplo3" rows="10" cols="30" name="mensajeEjemplo3" style="width: 30%;height: 25%;"></textarea>
+      <div class="Row">
+        <div id="resultado1" class="Column"></div>
+        <div id="resultado2" class="Column"></div>
+        <div id="resultado3" class="Column"></div>
+    </div>
+     <!--  <table style="align-content: center">
+          <tr>
+            <td  style="vertical-align:top;">
+                <textarea title="google"  id="mensajeEjemplo" rows="10" cols="30" name="mensajeEjemplo" style="width: 30%;height: 25%;"></textarea>
+                <textarea  id="mensajeEjemplo2" rows="10" cols="30" name="mensajeEjemplo2" style="width: 30%;height: 25%;"></textarea>
+                <textarea  id="mensajeEjemplo3" rows="10" cols="30" name="mensajeEjemplo3" style="width: 30%;height: 25%;"></textarea>
+            </td>
+          </tr>
+        </table> -->
+
+
     </div>
   </div>
   <div class="loading">
@@ -243,3 +334,5 @@ $.ajax({
   </script>
 
  -->
+
+ </html>
