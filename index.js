@@ -66,7 +66,7 @@ app.post('/uploadfile', upload.single('filePhoto'), (req, res, next) => {
       //arr.success.push(values);
      // arr.push(JSON.parse(values));
      var resultadofinal = JSON.stringify({ 
-      success: values, 
+      success: ['valor1','valor2','valor3'], 
       status: 200
     });
       console.log('---resltado final del index---');
