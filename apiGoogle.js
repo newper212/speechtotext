@@ -5,6 +5,13 @@ const GOOGLE_CLOUD_PROJECT_ID = 'my-project-1525791452214'; // Replace with your
 const GOOGLE_CLOUD_KEYFILE = 'acceso.json'; // Replace with the path to the downloaded private key
 
 const speech = require('@google-cloud/speech');
+
+const speech = Speech({
+  
+  projectId: GOOGLE_CLOUD_PROJECT_ID,
+  keyFilename: GOOGLE_CLOUD_KEYFILE,
+});
+
 const fs = require('fs');
 
 const client = new speech.SpeechClient();
@@ -43,7 +50,7 @@ const gcs = new Storage({
         
           (async () => {
           let audio = {
-           uri: 'gs://pruebafalabella/audio1.wav'
+           uri: 'gs://pruebafalabella/'+file.originalname,
            };
 
           
@@ -51,7 +58,6 @@ const gcs = new Storage({
            languageCode: 'es-ES'
          };
          let request = {
-          singleUtterance: true,
            audio: audio,
            config: config,
          };
