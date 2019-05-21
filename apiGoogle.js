@@ -51,6 +51,7 @@ const gcs = new Storage({
            languageCode: 'es-ES'
          };
          let request = {
+          singleUtterance: true,
            audio: audio,
            config: config,
          };
