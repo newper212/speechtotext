@@ -58,9 +58,9 @@ app.post('/uploadfile', upload.single('filePhoto'), (req, res, next) => {
     json= await ibmSpeech.transcribirBluemix(req);
 */
 //console.log('entro');
-    Promise.all([googleSpeech.transcribirGoogle(req), ibmSpeech.transcribirBluemix(req),azureSpeech.transcribirAzure(req)]).then(function(values) {
+    //Promise.all([googleSpeech.transcribirGoogle(req), ibmSpeech.transcribirBluemix(req),azureSpeech.transcribirAzure(req)]).then(function(values) {
       //Promise.all([azureSpeech.transcribirAzure(req)]).then(function(values) {
-
+  Promise.all([googleSpeech.transcribirGoogle(req), "valor2","valor3"]).then(function(values) {
       console.log('resultado');
       //console.log(values);
       //arr.success.push(values);
