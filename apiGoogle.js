@@ -43,7 +43,7 @@ const gcs = new Storage({
         
           (async () => {
           let audio = {
-           uri: 'gs://pruebafalabella/'+file.originalname,
+           uri: 'gs://pruebafalabella/audio1.wav'
            };
 
           
