@@ -2,15 +2,11 @@ var stream = require('stream');
 
 const {Storage} = require('@google-cloud/storage');
 const GOOGLE_CLOUD_PROJECT_ID = 'my-project-1525791452214'; // Replace with your project ID
-const GOOGLE_CLOUD_KEYFILE = 'acceso.json'; // Replace with the path to the downloaded private key
+const GOOGLE_CLOUD_KEYFILE = 'nuevoacceso.json'; // Replace with the path to the downloaded private key
 
 const speech = require('@google-cloud/speech');
 
-const speech = Speech({
-  
-  projectId: GOOGLE_CLOUD_PROJECT_ID,
-  keyFilename: GOOGLE_CLOUD_KEYFILE,
-});
+
 
 const fs = require('fs');
 

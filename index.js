@@ -13,7 +13,7 @@ var bufferStream = new stream.PassThrough();
 
 const {Storage} = require('@google-cloud/storage');
 const GOOGLE_CLOUD_PROJECT_ID = 'my-project-1525791452214'; // Replace with your project ID
-const GOOGLE_CLOUD_KEYFILE = 'acceso.json'; // Replace with the path to the downloaded private key
+const GOOGLE_CLOUD_KEYFILE = 'nuevoacceso.json'; // Replace with the path to the downloaded private key
 
 const speech = require('@google-cloud/speech');
 const fs = require('fs');
@@ -58,9 +58,9 @@ app.post('/uploadfile', upload.single('filePhoto'), (req, res, next) => {
     json= await ibmSpeech.transcribirBluemix(req);
 */
 //console.log('entro');
-    //Promise.all([googleSpeech.transcribirGoogle(req), ibmSpeech.transcribirBluemix(req),azureSpeech.transcribirAzure(req)]).then(function(values) {
+    Promise.all([googleSpeech.transcribirGoogle(req), ibmSpeech.transcribirBluemix(req),azureSpeech.transcribirAzure(req)]).then(function(values) {
       //Promise.all([azureSpeech.transcribirAzure(req)]).then(function(values) {
-  Promise.all([googleSpeech.transcribirGoogle(req), googleSpeech.transcribirGoogle(req),googleSpeech.transcribirGoogle(req)]).then(function(values) {
+  //Promise.all([googleSpeech.transcribirGoogle(req), googleSpeech.transcribirGoogle(req),googleSpeech.transcribirGoogle(req)]).then(function(values) {
       console.log('resultado');
       //console.log(values);
       //arr.success.push(values);
