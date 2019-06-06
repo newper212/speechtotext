@@ -4,13 +4,18 @@ const {Storage} = require('@google-cloud/storage');
 const GOOGLE_CLOUD_PROJECT_ID = 'my-project-1525791452214'; // Replace with your project ID
 const GOOGLE_CLOUD_KEYFILE = 'nuevoacceso.json'; // Replace with the path to the downloaded private key
 
+
 const speech = require('@google-cloud/speech');
 
 
 
 const fs = require('fs');
 
-const client = new speech.SpeechClient();
+const client = new speech.SpeechClient(
+  {
+    projectId: GOOGLE_CLOUD_PROJECT_ID,
+  }
+);
 
 const gcs = new Storage({
     projectId: GOOGLE_CLOUD_PROJECT_ID,
